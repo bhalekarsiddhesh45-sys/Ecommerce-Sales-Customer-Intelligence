@@ -1,8 +1,27 @@
 # Python Analysis Report
 
+## Table of Contents
+
+1. [Project Overview](#1-project-overview)
+2. [Dataset Overview](#2-dataset-overview)
+3. [Data Cleaning](#3-data-cleaning)
+4. [Exploratory Data Analysis](#4-exploratory-data-analysis)
+5. [Statistical Analysis](#5-statistical-analysis)
+6. [Customer Analysis — RFM](#6-customer-analysis--rfm)
+7. [RFM Scoring](#7-rfm-scoring)
+8. [Customer Segmentation](#8-customer-segmentation)
+9. [Product Analysis](#9-product-analysis)
+10. [Time-Series Analysis](#10-time-series-analysis)
+11. [Key Business Insights](#11-key-business-insights)
+12. [Python and SQL Validation](#12-python-and-sql-validation)
+13. [Python Project Files](#13-python-project-files)
+14. [Conclusion](#14-conclusion)
+
+---
+
 ## 1. Project Overview
 
-This report documents the Python-based analysis performed for the E-commerce Sales Customer Intelligence project.
+This report documents the Python-based analysis performed for the **E-commerce Sales & Customer Intelligence** project.
 
 The Python phase focuses on exploratory data analysis, statistical analysis, customer segmentation, product analysis, and time-series analysis.
 
@@ -24,22 +43,25 @@ The Python phase focuses on exploratory data analysis, statistical analysis, cus
 - Seaborn
 - OpenPyXL
 - Jupyter Notebook
+
+---
+
 ## 2. Dataset Overview
 
 The dataset contains transaction-level e-commerce sales data.
 
 ### Main Columns
 
-| Column | Description |
-|---|---|
-| InvoiceNo | Unique invoice/order number |
-| StockCode | Product code |
-| Description | Product description |
-| Quantity | Number of units purchased |
+| Column      | Description                  |
+| ----------- | ---------------------------- |
+| InvoiceNo   | Unique invoice/order number  |
+| StockCode   | Product code                 |
+| Description | Product description          |
+| Quantity    | Number of units purchased    |
 | InvoiceDate | Date and time of transaction |
-| UnitPrice | Price per unit |
-| CustomerID | Customer identifier |
-| Country | Customer country |
+| UnitPrice   | Price per unit               |
+| CustomerID  | Customer identifier          |
+| Country     | Customer country             |
 
 ### Derived Features
 
@@ -55,14 +77,10 @@ Revenue was calculated as:
 
 ```text
 Revenue = Quantity × UnitPrice
+```
 
 ---
 
-# Step 4 — Data Cleaning
-
-Add:
-
-```markdown
 ## 3. Data Cleaning
 
 The Python cleaning process was designed to maintain consistency with the cleaned dataset used in the SQL phase.
@@ -85,18 +103,21 @@ The Python cleaning process was designed to maintain consistency with the cleane
 
 ### Data Quality Summary
 
-| Data Quality Check | Result |
-|---|---:|
-| Cancelled transactions | 344 |
-| Invalid/zero UnitPrice rows | 100 |
-| Missing CustomerID | 4,935 |
-| Duplicate rows | 10 |
+| Data Quality Check          |  Result |
+| --------------------------- | ------: |
+| Cancelled transactions      |     344 |
+| Invalid/zero UnitPrice rows |     100 |
+| Missing CustomerID          |   4,935 |
+| Duplicate rows              |      10 |
 
 ### Important CustomerID Consideration
 
-Transactions with missing `CustomerID` were not removed from the overall sales analysis.
+Transactions with missing `CustomerID` were **not** removed from the overall sales analysis.
 
 However, they were excluded from RFM analysis because customer-level analysis requires a valid customer identifier.
+
+---
+
 ## 4. Exploratory Data Analysis
 
 Exploratory Data Analysis was performed to understand the distribution, relationships and trends present in the cleaned transaction data.
@@ -108,35 +129,38 @@ The analysis included:
 - Monthly revenue analysis
 - Quantity versus revenue analysis
 - Daily and weekly revenue analysis
+
 ### 4.1 Distribution Analysis
 
 The distributions of Quantity, UnitPrice and Revenue were analyzed using histograms.
 
 ![Quantity, UnitPrice and Revenue Distributions](images/python_distribution_analysis.png)
 
-### Interpretation
+**Interpretation**
 
 The distributions are heavily right-skewed. Most transactions have relatively small values, while a smaller number of transactions have substantially larger values.
 
 Because of this skewness, median and percentile-based measures are useful alongside the mean when describing typical transaction behavior.
+
 ### 4.2 Revenue by Country
 
 Revenue was aggregated by country to identify the major geographic markets.
 
 ![Top 10 Countries by Revenue](images/top_10_countries_revenue.png)
 
-### Interpretation
+**Interpretation**
 
 The chart shows the countries contributing the highest revenue to the cleaned dataset.
 
 This analysis can support geographic market analysis, regional sales planning and identification of important customer markets.
+
 ### 4.3 Monthly Revenue Trend
 
 Monthly revenue was calculated using the `YearMonth` feature.
 
 ![Monthly Revenue Trend](images/monthly_revenue_trend.png)
 
-### Interpretation
+**Interpretation**
 
 The monthly revenue trend shows a clear increase in activity during November 2011.
 
@@ -145,17 +169,21 @@ November shows a noticeable revenue spike, which is consistent with increased pr
 Revenue declines in December after the middle of the month. This should be interpreted carefully because the available dataset ends around the middle of December, so December does not represent a complete month.
 
 The summer months are comparatively quieter.
+
 ### 4.4 Quantity vs Revenue
 
 A sampled scatter plot was used to examine the relationship between quantity purchased and transaction revenue.
 
 ![Quantity vs Revenue](images/quantity_vs_revenue.png)
 
-### Interpretation
+**Interpretation**
 
 The scatter plot helps identify the relationship between the quantity purchased and revenue generated by individual transactions.
 
 A sample of transactions was used to reduce overplotting and make the relationship easier to visualize.
+
+---
+
 ## 5. Statistical Analysis
 
 The transaction data contains highly skewed distributions. Therefore, the analysis does not rely only on the mean.
@@ -177,19 +205,25 @@ The IQR describes the spread of the middle 50% of observations and is useful whe
 A coefficient of variation can also be used to describe the relative volatility of monthly revenue.
 
 Formal statistical tests were not added unless they answer a specific business question.
+
+---
+
 ## 6. Customer Analysis — RFM
 
 RFM analysis was performed to understand customer purchasing behavior.
 
 ### RFM Metrics
 
-| Metric | Meaning |
-|---|---|
-| Recency | Number of days since the customer's most recent purchase |
-| Frequency | Number of distinct orders placed by the customer |
-| Monetary | Total revenue generated by the customer |
+| Metric    | Meaning                                                  |
+| --------- | -------------------------------------------------------- |
+| Recency   | Number of days since the customer's most recent purchase |
+| Frequency | Number of distinct orders placed by the customer         |
+| Monetary  | Total revenue generated by the customer                  |
 
 The RFM snapshot date was defined as one day after the maximum transaction date in the cleaned dataset.
+
+---
+
 ## 7. RFM Scoring
 
 Customers were scored from 1 to 5 using quintile-based scoring.
@@ -216,34 +250,23 @@ Example:
 
 ```text
 555
-
-The reason for `rank(method='first')` is specifically documented in the phase source. :contentReference[oaicite:5]{index=5}
+```
 
 ---
 
-# Step 13 — RFM Segment Graph
-
-This is **one of the most important graphs for the report**.
-
-From `04_customer_analysis_rfm.ipynb`, export your segment distribution graph.
-
-Save:
-
-```text
-reports/images/rfm_segment_distribution.png
 ## 8. Customer Segmentation
 
 Customers were grouped into business-oriented segments using their RFM scores.
 
-| Segment | Business Meaning |
-|---|---|
-| Champions | Highly recent, frequent and valuable customers |
-| Loyal Customers | Customers with strong purchasing relationships |
-| Potential Loyalists | Customers showing potential for stronger loyalty |
-| New Customers | Recently acquired customers with limited purchase history |
-| At Risk | Previously active customers showing weaker recency |
-| Lost Customers | Customers with low recency and lower purchasing activity |
-| Needs Attention | Customers with mixed RFM signals |
+| Segment             | Business Meaning                                          |
+| ------------------- | --------------------------------------------------------- |
+| Champions           | Highly recent, frequent and valuable customers            |
+| Loyal Customers     | Customers with strong purchasing relationships            |
+| Potential Loyalists | Customers showing potential for stronger loyalty          |
+| New Customers       | Recently acquired customers with limited purchase history |
+| At Risk             | Previously active customers showing weaker recency        |
+| Lost Customers      | Customers with low recency and lower purchasing activity  |
+| Needs Attention     | Customers with mixed RFM signals                          |
 
 ### RFM Segment Distribution
 
@@ -251,15 +274,15 @@ Customers were grouped into business-oriented segments using their RFM scores.
 
 ### Business Actions
 
-| Segment | Suggested Action |
-|---|---|
-| Champions | Reward with early access and loyalty perks |
-| Loyal Customers | Upsell, cross-sell and encourage reviews/referrals |
-| Potential Loyalists | Use targeted offers to increase frequency |
-| New Customers | Focus on onboarding and second-purchase incentives |
-| At Risk | Use win-back campaigns |
-| Lost Customers | Use low-cost reactivation campaigns |
-| Needs Attention | Investigate and monitor behavior |
+| Segment             | Suggested Action                                   |
+| ------------------- | -------------------------------------------------- |
+| Champions           | Reward with early access and loyalty perks         |
+| Loyal Customers     | Upsell, cross-sell and encourage reviews/referrals |
+| Potential Loyalists | Use targeted offers to increase frequency          |
+| New Customers       | Focus on onboarding and second-purchase incentives |
+| At Risk             | Use win-back campaigns                             |
+| Lost Customers      | Use low-cost reactivation campaigns                |
+| Needs Attention     | Investigate and monitor behavior                   |
 
 ### RFM Coverage Limitation
 
@@ -270,6 +293,9 @@ Therefore, RFM revenue should not be treated as the total revenue of the complet
 The difference represents revenue from transactions where customer identification was unavailable.
 
 The final revenue coverage percentage should be taken directly from the RFM notebook results.
+
+---
+
 ## 9. Product Analysis
 
 Product-level analysis was performed using:
@@ -288,15 +314,19 @@ Product-level analysis was performed using:
 - Identify products showing declining revenue trends
 
 The product analysis also compares monthly product revenue across the latest three available months to identify consecutive revenue declines.
+
 ### Top Products by Revenue
 
 ![Top Products by Revenue](images/top_products_revenue.png)
 
-### Interpretation
+**Interpretation**
 
 The chart shows the products contributing the highest revenue in the cleaned dataset.
 
 These products can be further investigated based on revenue, quantity and order frequency.
+
+---
+
 ## 10. Time-Series Analysis
 
 Monthly revenue was analyzed to understand changes in sales performance over time.
@@ -304,19 +334,15 @@ Monthly revenue was analyzed to understand changes in sales performance over tim
 Month-over-month revenue growth was calculated as:
 
 ```text
-MoM Growth % =
-((Current Month Revenue - Previous Month Revenue)
- / Previous Month Revenue) × 100
+MoM Growth % = ((Current Month Revenue - Previous Month Revenue) / Previous Month Revenue) × 100
+```
 
-The source explicitly says the Python MoM calculation should be cross-checked against SQL Q25. :contentReference[oaicite:9]{index=9}
+![Month-over-Month Revenue Growth](images/mom_revenue_growth.png)
+
+The Python MoM calculation should be cross-checked against SQL Q25.
 
 ---
 
-# Step 17 — Key Business Insights
-
-Add:
-
-```markdown
 ## 11. Key Business Insights
 
 ### Sales
@@ -347,6 +373,9 @@ Add:
 
 - Monthly revenue and MoM growth provide a view of changes in business performance over time.
 - Python time-series results should be validated against the SQL analysis.
+
+---
+
 ## 12. Python and SQL Validation
 
 Python results were cross-checked with the SQL analysis where applicable.
@@ -366,7 +395,10 @@ If differences occur, the following areas should be checked:
 - Quantity filtering
 - UnitPrice filtering
 - Non-product stock-code filtering
-- Missing CustomerID handling	
+- Missing CustomerID handling
+
+---
+
 ## 13. Python Project Files
 
 ```text
@@ -378,8 +410,8 @@ python/
 ├── 05_product_analysis.ipynb
 └── 06_time_series_analysis.ipynb
 
-reports/
-├── python_analysis_report.md
+report/
+├── Python_Analysis_Report.md
 ├── rfm.csv
 └── images/
     ├── python_distribution_analysis.png
@@ -389,7 +421,11 @@ reports/
     ├── rfm_segment_distribution.png
     ├── top_products_revenue.png
     └── mom_revenue_growth.png
-## 15. Conclusion
+```
+
+---
+
+## 14. Conclusion
 
 The Python phase extends the SQL analysis by providing statistical exploration, visualization, customer segmentation, product analysis and time-series analysis.
 
