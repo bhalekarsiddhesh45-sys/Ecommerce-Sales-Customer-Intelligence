@@ -134,7 +134,7 @@ The analysis included:
 
 The distributions of Quantity, UnitPrice and Revenue were analyzed using histograms.
 
-![Quantity, UnitPrice and Revenue Distributions](images/python_distribution_analysis.png)
+![Quantity, UnitPrice and Revenue Distributions](../images/python_distribution_analysis.png)
 
 **Interpretation**
 
@@ -146,7 +146,7 @@ Because of this skewness, median and percentile-based measures are useful alongs
 
 Revenue was aggregated by country to identify the major geographic markets.
 
-![Top 10 Countries by Revenue](images/top_10_countries_revenue.png)
+![Top 10 Countries by Revenue](../images/top_10_countries_revenue.png)
 
 **Interpretation**
 
@@ -158,7 +158,7 @@ This analysis can support geographic market analysis, regional sales planning an
 
 Monthly revenue was calculated using the `YearMonth` feature.
 
-![Monthly Revenue Trend](images/monthly_revenue_trend.png)
+![Monthly Revenue Trend](../images/monthly_revenue_trend.png)
 
 **Interpretation**
 
@@ -174,7 +174,7 @@ The summer months are comparatively quieter.
 
 A sampled scatter plot was used to examine the relationship between quantity purchased and transaction revenue.
 
-![Quantity vs Revenue](images/quantity_vs_revenue.png)
+![Quantity vs Revenue](../images/quantity_vs_revenue.png)
 
 **Interpretation**
 
@@ -270,7 +270,7 @@ Customers were grouped into business-oriented segments using their RFM scores.
 
 ### RFM Segment Distribution
 
-![RFM Segment Distribution](images/rfm_segment_distribution.png)
+![RFM Segment Distribution](../images/rfm_segment_distribution.png)
 
 ### Business Actions
 
@@ -317,7 +317,7 @@ The product analysis also compares monthly product revenue across the latest thr
 
 ### Top Products by Revenue
 
-![Top Products by Revenue](images/top_products_revenue.png)
+![Top Products by Revenue](../images/top_products_revenue.png)
 
 **Interpretation**
 
@@ -337,7 +337,7 @@ Month-over-month revenue growth was calculated as:
 MoM Growth % = ((Current Month Revenue - Previous Month Revenue) / Previous Month Revenue) × 100
 ```
 
-![Month-over-Month Revenue Growth](images/mom_revenue_growth.png)
+![Month-over-Month Revenue Growth](../images/mom_revenue_growth.png)
 
 The Python MoM calculation should be cross-checked against SQL Q25.
 
