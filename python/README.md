@@ -49,10 +49,10 @@ python/
 │
 ├── 01_Data_Loading.ipynb
 ├── 02_Data_Cleaning.ipynb
-├── 03_EDA.ipynb
-├── 04_Customer_Analysis_RFM.ipynb
-├── 05_Product_Analysis.ipynb
-└── 06_Time_Series_Analysis.ipynb
+├── 03_eda.ipynb
+├── 04_customer_analysis_rfm.ipynb
+├── 05_product_analysis.ipynb
+└── 06_time_series_analysis.ipynb
 ```
 
 ---
@@ -74,7 +74,7 @@ Example:
 ```python
 import pandas as pd
 
-df = pd.read_excel("../excel/Online_Retail_Raw.xlsx")
+df = pd.read_excel("../data/raw/Online_Retail_Raw.xlsx")
 
 print(df.shape)
 df.info()
@@ -232,31 +232,31 @@ The Python MoM calculation is cross-checked against the corresponding SQL analys
 
 ---
 
-# 📁 Outputs
+# 📁 Project Outputs
 
-Important Python outputs will be stored in the project `reports/` directory.
+The Python analysis outputs are kept in the project's separate `images/` folder.
 
 ```text
-reports/
-├── rfm.csv
-└── rfm_segment_distribution.png
+images/
+├── python_distribution_analysis.png
+├── top_10_countries_revenue.png
+├── monthly_revenue_trend.png
+├── quantity_vs_revenue.png
+├── rfm_segment_distribution.png
+├── top_products_revenue.png
+└── mom_revenue_growth.png
 ```
 
-### `rfm.csv`
+The complete written Python analysis is kept separately in:
 
-Contains customer-level:
+```text
+report/
+└── Python_Analysis_Report.md
+```
 
-* CustomerID
-* Recency
-* Frequency
-* Monetary
-* RFM scores
-* RFM Score
-* Customer Segment
+The RFM analysis remains in `python/04_customer_analysis_rfm.ipynb`.
 
-### Segment Distribution Chart
-
-A visualization showing the number of customers in each RFM segment.
+No separate `rfm.csv` output is required for this project.
 
 ---
 
